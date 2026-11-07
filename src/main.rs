@@ -6,15 +6,19 @@ fn main() {
         print!("$ ");
         io::stdout().flush().unwrap();
 
-        let mut command = String::new();
-        io::stdin().read_line(&mut command).unwrap();
+        let mut line = String::new();
+        io::stdin().read_line(&mut line).unwrap();
 
-        let command = command.trim();
+        let splits = line.trim()
+            .split_whitespace()
+            .collect::<Vec<&str>>();
 
-        if command == "exit" {
-            break;
+        let command = splits[0];
+
+        match command {
+            "exit" => break,
+            "echo" => println!("{}", splits[1..].join(" ")),
+            _ => println!("{command}: command not found"),
         }
-
-        println!("{command}: command not found");
     }
 }
